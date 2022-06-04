@@ -1,0 +1,37 @@
+import catbox
+import yt_dlp
+import yturl
+from pyupload.uploader import *
+from catbox import uploader
+import edit
+
+@bot.command(pass_context=True)
+async def ytdl(ctx, url: str):
+    """download a youtube video"""
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'preferredcodec': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp4',
+            'preferredquality': '192',
+        }],
+    }
+
+    ydl_opts = {
+        'outtmpl': 'PATH\for\TEMP\video'}
+    message = await ctx.send(f"please wait a second.. if the video is long the download could take longer")
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+      ydl.download([url])
+    uploader_class = CatboxUploader
+    uploader_instance = uploader_class
+    catboxurl = uploader_instance.execute()
+    await message.edit(content=f"finished downloading! {ctx.author.mention} {catboxurl}")
+#deletes file after uploading it
+    os.remove("PATH\of\VIDEO\to\REMOVE")
+
+
+#pip installations
+pip install catbox
+pip install yt_dlp
+pip install yturl
+pip install ytdl
