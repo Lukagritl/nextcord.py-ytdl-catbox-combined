@@ -23,7 +23,7 @@ async def ytdl(ctx, url: str):
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
       ydl.download([url])
     uploader_class = CatboxUploader
-    uploader_instance = uploader_class
+    uploader_instance = uploader_class(f"Path of video which will be uploaded to catbox")
     catboxurl = uploader_instance.execute()
     await message.edit(content=f"finished downloading! {ctx.author.mention} {catboxurl}")
 #deletes file after uploading it
